@@ -1,7 +1,8 @@
 module Main where
 
 import HaskellKatas
-  ( elemAt
+  ( compress
+  , elemAt
   , isPalindrome
   , myButLast
   , myLast

@@ -1,33 +1,41 @@
-module Main where
+module Katas1to10
+  ( testKatas1to10
+  ) where
 
-import Test.Tasty
-import Test.Tasty.HUnit
+import Test.Tasty (TestTree, testGroup)
+import Test.Tasty.HUnit ((@?=), testCase)
 
-import HaskellKatas
+import HaskellKatas1to10
   ( NestedList(Elem, List)
+  , compress
   , elemAt
+  , encode
   , isPalindrome
   , myButLast
   , myFlatten
   , myLast
   , myLength
   , myReverse
+  , pack
   )
 
-main :: IO ()
-main =
-  defaultMain $
+testKatas1to10 :: TestTree
+testKatas1to10 =
   testGroup
-    "Testing HaskellKatas"
-    [ testMyLast
-    , testMyButLast
-    , testElemAt
-    , testMyLenght
-    , testMyReverse
-    , testIsPalindrome
-    , testMyFlatten
+    "Testing Katas from 1 to 10"
+    [ testMyLast -- 			1
+    , testMyButLast -- 		2
+    , testElemAt -- 		  3
+    , testMyLenght -- 		4
+    , testMyReverse -- 		5
+    , testIsPalindrome -- 6
+    , testMyFlatten -- 		7
+    , testCompress -- 		8
+    , testPack -- 				9
+    , testEncode -- 			10
     ]
 
+-- 1
 testMyLast :: TestTree
 testMyLast =
   testGroup
@@ -40,6 +48,7 @@ testMyLast =
       myLast ([] :: [Int]) @?= Nothing
     ]
 
+-- 2
 testMyButLast :: TestTree
 testMyButLast =
   testGroup
@@ -56,6 +65,7 @@ testMyButLast =
       myButLast ([] :: [Int]) @?= Nothing
     ]
 
+-- 3
 testElemAt :: TestTree
 testElemAt =
   testGroup
@@ -70,6 +80,7 @@ testElemAt =
       elemAt ["singleton"] 1 @?= Nothing
     ]
 
+-- 4
 testMyLenght :: TestTree
 testMyLenght =
   testGroup
@@ -82,6 +93,7 @@ testMyLenght =
       myLength ([] :: [Int]) @?= 0
     ]
 
+-- 5
 testMyReverse :: TestTree
 testMyReverse =
   testGroup
@@ -98,6 +110,7 @@ testMyReverse =
       myReverse ([] :: [Int]) @?= []
     ]
 
+-- 6
 testIsPalindrome :: TestTree
 testIsPalindrome =
   testGroup
@@ -108,6 +121,7 @@ testIsPalindrome =
       isPalindrome [1, 2, 3, 4] @?= False
     ]
 
+-- 7
 testMyFlatten :: TestTree
 testMyFlatten =
   testGroup
@@ -125,4 +139,42 @@ testMyFlatten =
            , List [List [Elem 1], Elem 5, Elem 6]
            ]) @?=
       [1, 1, 2, 3, 4, 4, 1, 5, 6]
+    , testCase "Returning the flatten of a singleton list" $
+      myFlatten (List [Elem 1]) @?= [1]
+    , testCase "Returning the flatten of an empty list" $
+      myFlatten (List []) @?= ([] :: [Int])
+    ]
+
+-- 8
+testCompress :: TestTree
+testCompress =
+  testGroup
+    "Testing compress"
+    [ testCase "Returning 'ABC' when 'AABBBCC' is provided" $
+      compress "AABBBCC" @?= "ABC"
+    , testCase "Returning 'A' when 'AAA' is provided" $ compress "AAA" @?= "A"
+    , testCase "Returning '' when '' is provided" $ compress "" @?= ""
+    ]
+
+-- 9
+testPack :: TestTree
+testPack =
+  testGroup
+    "Testing pack"
+    [ testCase "Returning 'ABC' when 'AABBBCC' is provided" $
+      pack "AABBBCC" @?= ["AA", "BBB", "CC"]
+    , testCase "Returning 'A' when 'AAA' is provided" $ pack "AAA" @?= ["AAA"]
+    , testCase "Returning '' when '' is provided" $ pack "" @?= []
+    ]
+
+-- 10
+testEncode :: TestTree
+testEncode =
+  testGroup
+    "Testing encode"
+    [ testCase "Returning 'ABC' when 'AABBBCC' is provided" $
+      encode "AABBBCC" @?= [(2, 'A'), (3, 'B'), (2, 'C')]
+    , testCase "Returning 'A' when 'AAA' is provided" $
+      encode "AAA" @?= [(3, 'A')]
+    , testCase "Returning '' when '' is provided" $ encode "" @?= []
     ]
