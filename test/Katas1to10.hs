@@ -23,16 +23,16 @@ testKatas1to10 :: TestTree
 testKatas1to10 =
   testGroup
     "Testing Katas from 1 to 10"
-    [ testMyLast -- 			1
-    , testMyButLast -- 		2
-    , testElemAt -- 		  3
-    , testMyLenght -- 		4
-    , testMyReverse -- 		5
+    [ testMyLast --       1
+    , testMyButLast --    2
+    , testElemAt --       3
+    , testMyLenght --     4
+    , testMyReverse --    5
     , testIsPalindrome -- 6
-    , testMyFlatten -- 		7
-    , testCompress -- 		8
-    , testPack -- 				9
-    , testEncode -- 			10
+    , testMyFlatten --    7
+    , testCompress --     8
+    , testPack --         9
+    , testEncode --       10
     ]
 
 -- 1
